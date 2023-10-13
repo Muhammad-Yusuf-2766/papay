@@ -23,7 +23,7 @@ mongodb.connect(connectionString, {
     let PORT = process.env.PORT || 3003;
     server.listen(PORT, function () {
       console.log(
-        `The Sever is running successfully on port ${PORT}, http://localhost:5003`
+        `The Sever is running successfully on port ${PORT}, http://localhost:3003`
       );
     });
   }
