@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { member_status_enums } = require("../lib/config");
 
-const membershcema = new mongoose.Schema({
+const memberschema = new mongoose.Schema({
     mb_nick: {
         type: String,
         required: true,
@@ -75,13 +75,11 @@ const membershcema = new mongoose.Schema({
         required: false,
         default: 0,
     },
-    mb_:subscriber_cnt {
+    mb_subscriber_cnt: {
         type: Number,
         required: false,
         default: 0,
     },
-    {timestamps: true}, // createdAt, updatedAt
+}, {timestamps: true});
 
-});
-
-module.exports = mongoose.model("Member", membershcema)
+module.exports = mongoose.model("Member", memberschema);
