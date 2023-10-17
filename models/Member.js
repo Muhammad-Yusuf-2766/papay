@@ -5,6 +5,7 @@ class Member {
         this.memberModel = MemberModel
     }
     async singupData(input) {
+        let result;
         try {
             const new_member = this.memberModel(input);
             try {

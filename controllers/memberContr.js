@@ -9,9 +9,10 @@ memberController.signup = async (req, res) =>{
         const member = new Member();
         const new_member = await member.singupData(data);
 
-        res.send("done")
+        res.json({state:"succed", data:new_member})
     }catch (err) {
         console.log(`ERROR: contr/sign-up`, err)
+        res.json({state:"failed", message:err.message})
     }
 };
 
