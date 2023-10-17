@@ -20,6 +20,7 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // Routing code
-app.use("/", router)
+// app.use("/resto", router_bssr);
+app.use("/", router);
 
 module.exports = app;

@@ -3,9 +3,10 @@ dotenv.config();
 
 
 const http = require("http");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose").default;
 
 const connectionString = process.env.MONGO_URL;
+mongoose.set('strictQuery', false)
 // mongooseni yangi versiyasida connect qilib oldim. eski connect usuli bsohqacha.
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
