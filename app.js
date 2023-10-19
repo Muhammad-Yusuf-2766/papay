@@ -3,6 +3,7 @@ console.log("Web Serverni boshlaymiz")
 const express = require("express");
 const app = express();
 const router = require("./router")
+const router_bssr = require("./router_bssr")
 
 // // MongoDB chaqirish:  mongoose orqali chaqirganim uchun bu usulni o'chirib qo'ydim.
 // const db = require("./server").db();
@@ -20,7 +21,7 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // Routing code
-// app.use("/resto", router_bssr);
+app.use("/resto", router_bssr);
 app.use("/", router);
 
 module.exports = app;
