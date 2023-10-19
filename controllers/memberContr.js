@@ -1,13 +1,16 @@
 let memberController = module.exports;
 
-memberController.home = (req, res) =>{
-    console.log("GET controller.home")
-    res.send("You are in Homepage")
-};
+memberController.signup = async (req, res) =>{
+    try{
+        console.log("POST: contr/sign-up")
+        const data = req.body;
+        const member = new Member();
+        const new_member = await member.singupData(data);
 
-memberController.signup = (req, res) =>{
-    console.log("POST controller.signup")
-    res.send("You are in signup-page")
+        res.send("done")
+    }catch (err) {
+        console.log(`ERROR: contr/sign-up`, err)
+    }
 };
 
 memberController.login = (req, res) =>{
