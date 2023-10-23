@@ -70,6 +70,13 @@ restaurantController.loginProcess = async (req, res) =>{
     }
 };
 
+restaurantController.validateAuthRestaurant = (req, res, next) =>{
+    if(req.session?.member?.mb_type === "RESTAURANT"){
+        req.member = req.session.member
+        next()
+    }else res.json({state:"fail", message:"Only authenticated members with restaurant type"})
+}
+
 
 restaurantController.logout = (req, res) =>{
     console.log("GET controller.logout")
