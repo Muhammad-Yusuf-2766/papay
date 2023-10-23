@@ -23,7 +23,7 @@ class Member {
 
             }
 
-            result.mb_password = "";
+            // result.mb_password = "";
             return result;
           } catch (err) {
             throw err;

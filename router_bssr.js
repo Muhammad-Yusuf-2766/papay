@@ -6,12 +6,16 @@ const restaurantController = require("./controllers/restaurantContr")
 //                   BSSR EJS                   
 // =============================================
 
-router_bssr.get("/signup", restaurantController.getSignupMyRestaurant);
-router_bssr.post("/signup", restaurantController.signupProcess);
+router_bssr
+  .get("/signup", restaurantController.getSignupMyRestaurant)
+  .post("/signup", restaurantController.signupProcess);
 
-router_bssr.get("/login", restaurantController.getLoginMyRestaurant);
-router_bssr.post("/login", restaurantController.loginProcess);
-
+router_bssr
+  .get("/login", restaurantController.getLoginMyRestaurant)
+  .post("/login", restaurantController.loginProcess);
 router_bssr.get("/logout", restaurantController.logout);
+router_bssr.get("/check-me", restaurantController.checkSessions);
 
-module.exports = router_bssr;
+router_bssr.get("/products/menu", restaurantController.getMyRestaurantData);
+
+module.exports = router_bssr;   
