@@ -12,8 +12,9 @@ productController.getAllProducts = async (req, res) => {
 productController.addNewProduct = async (req, res) => {
     try{
         console.log("POST: Contr/addNewProduct");
-        console.log(req.member);
-        // TODO: product creation develop 
+        // TODO: product creation develop
+        res.send("Ok")
+        
     } catch (err) {
         console.log(`ERROR: Contr/addNewProduct, ${err.message}`);
     }

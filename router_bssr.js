@@ -1,7 +1,8 @@
 const express = require("express");
 const router_bssr = express.Router();
 const restaurantController = require("./controllers/restaurantContr");
-const productController = require("./controllers/products.Contr")
+const productController = require("./controllers/products.Contr");
+const { uploadProductImage } = require("./utils/upload-multer")
 
 // =============================================
 //                   BSSR EJS                   
@@ -21,6 +22,7 @@ router_bssr.get("/products/menu", restaurantController.getMyRestaurantData);
 
 router_bssr.post("/products/create", 
   restaurantController.validateAuthRestaurant, 
+  uploadProductImage.single("product_image"),
   productController.addNewProduct);
 
 router_bssr.post("/products/edit/:id", productController.updateChosenProduct);
