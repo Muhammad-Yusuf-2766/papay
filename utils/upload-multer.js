@@ -1,19 +1,47 @@
 const path = require("path");
 const multer = require("multer");
 const uuid = require("uuid");
-const { uuidV4 } = require("mongodb/lib/core/utils");
 
-const product_storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './uploads/products');
-    },
-    filename: function(req, file, cb) {
-        console.log("New file is uploaded:", file);
-        const extension = path.parse(file.originalname).ext;
-        const random_name = uuid.v4() + extension;
+// --------- Multer Image Uploader ---------
+function getTargetImageStorage(address) {
+    return multer.diskStorage({
+        destination: function(req, file, cb) {
+            cb(null, `./uploads/${address}`);
+        },
+        filename: function(req, file, cb) {
+            console.log("New file is uploaded:", file);
+            const extension = path.parse(file.originalname).ext;
+            const random_name = uuid.v4() + extension;
+    
+            cb(null, random_name);
+        },
+    })
+};
 
-        cb(null, random_name)
-    },
-});
+const makeUploader = (address) => {
+    const storage = getTargetImageStorage(address);
+    return multer({storage: storage})
+};
 
-module.exports.uploadProductImage = multer({storage: product_storage})
+module.exports = makeUploader;
+
+
+
+
+
+
+
+// const product_storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, './uploads/products');
+//     },
+//     filename: function(req, file, cb) {
+//         console.log("New file is uploaded:", file);
+//         const extension = path.parse(file.originalname).ext;
+//         const random_name = uuid.v4() + extension;
+
+//         cb(null, random_name);
+//     },
+// });
+
+// module.exports.uploadProductImage = multer({storage: product_storage})
