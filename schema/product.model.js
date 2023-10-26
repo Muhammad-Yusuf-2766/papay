@@ -50,7 +50,7 @@ const productSchema = new mongoose.Schema({
         },
         enum: {values: product_volume_enums, message:"{Value} is not among enum values"}
     },
-    product_desciption: {
+    product_description: {
         type: String,
         required: true
     },
