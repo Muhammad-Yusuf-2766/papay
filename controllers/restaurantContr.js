@@ -4,6 +4,27 @@ const Product = require("../models/Product");
 const { signup } = require("./memberContr");
 let restaurantController = module.exports;
 
+restaurantController.home = (req, res) => {
+    try {
+        console.log('GET: cont/home');
+        res.render("home-page");
+    } catch (err) {
+        console.log (`ERROR, cont/getMyRestaurantProducts, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
+}
+
+
+restaurantController.home = (req, res) => {
+    try{
+        console.log("GET: CONTR/HOME");
+        res.render("home-page");
+    } catch (err) {
+        throw console.log(`ERROR: contr/home ${err.message}`);
+        res.json({state:"failed", message:err.message});
+    }
+}
+
 restaurantController.getMyRestaurantProducts = async (req, res) => {
     try{
         console.log("GET: contr/getMyRestaurantProducts");
