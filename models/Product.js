@@ -32,7 +32,7 @@ class Product {
 
             assert(result, Definer.product_err1);
             return result;
-
+            
         }catch(err) {
             throw err
         }

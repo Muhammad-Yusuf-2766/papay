@@ -1,0 +1,33 @@
+<%- include('includes/header') %>
+
+<link rel="stylesheet" href="/css/login.css" type="text/css">
+
+<body>
+    <form class="login_container" action="/resto/login" method="POST">
+        <div class="login_frame">
+
+            <div class="login_top">
+                <span>Saytga Kirish</span>
+                <div>Bosh sahifaga qayttish <a href="/resto" style="color: #0c5ea0; font-weight: bold;">Home</a></div>
+                <p>ro'yhatdan o'tmaganmisiz? <a style="color: #0c5ea0; font-weight: bold;"  href="/resto/sign-up">Ro'yhatdan o'tish</a></p>
+            </div>
+
+            <div class="input_frame">
+
+                <div class="login_input_container">
+                    <label>Foydalanuvchining ismi:</label>
+                    <input placeholder="User name" name="mb_nick" value="" type="text" required>
+                </div>
+
+                <div class="login_input_container">
+                    <label>Foydalanuvchining Passwordi:</label>
+                    <input placeholder="User Password" name="mb_password" value="" type="password" required>
+                </div>
+
+            </div>
+            <button class="login_btn btn" type="submit" name="login">Kirish</button>
+        </div>
+    </form>
+</body>
+
+<%- include('includes/footer') %>

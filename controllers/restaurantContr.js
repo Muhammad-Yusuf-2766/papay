@@ -70,7 +70,7 @@ restaurantController.signupProcess = async (req, res) =>{
 restaurantController.getLoginMyRestaurant = async (req, res) => {
     try{
         console.log("GET: contr/getLoginMyRestaurant");
-        res.render("login");
+        res.render("login-page");
 
     }catch(err){
         console.log(`ERROR: contr/getLoginMyRestaurant ${err.message}`);
