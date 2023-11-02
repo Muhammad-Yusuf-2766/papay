@@ -1,7 +1,75 @@
 <%- include('includes/header') %>
 
-<body>
-<h1>Sign-up page</h1>
-</body>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
 
-<%- include('includes/footer') %>
+    <body>
+        <form class="login_container" action="/resto/sign-up" method="POST" enctype="multipart/form-data">
+
+            <div class="login_frame" style="width: 650px;">
+
+            <div class="login_top">
+                <span>Ro'yhatdan o'tish</span>
+                <div>Bosh sahifaga qayttish <a href="/resto/login" style="color: #0c5ea0; font-weight: bold;">Home</a></div>
+                <p>Ro'yhatdan o'tganmisiz? <a style="color: #0c5ea0; font-weight: bold;"  href="/resto/sign-up">Login</a></p>
+            </div>
+
+            <div class="sign_input_frame"> 
+                <div class="sign_up_frame">
+                    <label>Foydalanuvchining ismi:</label>
+                    <input type="text" name="mb_nick"
+                    placeholder="User name"
+                    value=""
+                    required
+                    />
+                </div>
+                <div class="sign_up_frame">
+                    <label>Telefon raqam:</label>
+                    <input type="text" name="mb_phone"
+                    placeholder="User Phone number"
+                    value=""
+                    required
+                    />
+                </div>
+            </div>
+
+            <div class="sign_input_frame"> 
+                <div class="sign_up_frame">
+                    <label>Password:</label>
+                    <input type="password" name="mb_password"
+                    placeholder="User password"
+                    value=""
+                    required
+                    />
+                </div>
+                <div class="sign_up_frame">
+                    <label>Passwordni tasdiqlash:</label>
+                    <input type="password" name="mb_confirm_password"
+                    placeholder="confirm_password"
+                    value=""
+                    required
+                    />
+                </div>
+            </div>
+
+            <div class="login_input_frame"></div>
+            <div class="media_frame">
+                <img class="upload_img_frame" src="/images/default_image.jpg" alt="">
+                <div class="upload_container">
+                    <span class="media_text">Taom rasmi:</span>
+                    <div class="filebox bs3-primary preview-image">
+                        <input  class="upload-name" value="rasmni tanlang" disabled="disabled"/>
+
+                        <label>Rasmni yuklash</label>
+                          <input class="upload-hidden form-control-file restaurant_img" id="input_file" type="file"/>
+                    </div>
+                    <p class="thumbnail_desc">Oshxona rasmingizni bu yerga yuklang. <br> Muhim ko'rsatmalar: .jpg, .jpeg, yoki .png <br>rasmda matn yo'q bo'lishi kerak !</p>
+                </div>
+            </div>
+
+            <button style="background-color: #0c5ea0; color: white;" class="login_btn btn" name="Sign-up" type="submit">Ro'yhatdan o'tish</button>
+
+            </div>
+        </form>
+    </body>
+
+    <%- include('includes/footer') %>

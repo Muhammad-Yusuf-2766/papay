@@ -29,7 +29,7 @@ app.use(
             maxAge: 1000 * 60 * 30, // for 30 minutes
         },
         store: store,
-        resave: true,
+        resave: true,          // bu user har browserga kirganda sessionning vaqtini yangilashlik uchun
         saveUninitialized: true,
     })
 );
