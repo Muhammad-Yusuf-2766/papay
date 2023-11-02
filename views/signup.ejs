@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="/css/login.css">
 
     <body>
-        <form class="login_container" action="/resto/sign-up" method="POST" enctype="multipart/form-data">
+        <form onsubmit="return validateSignUpForm()" class="login_container" action="/resto/sign-up" method="POST" enctype="multipart/form-data">
 
             <div class="login_frame" style="width: 650px;">
 
@@ -17,17 +17,17 @@
                 <div class="sign_up_frame">
                     <label>Foydalanuvchining ismi:</label>
                     <input type="text" name="mb_nick"
+                    class="mb_nick"
                     placeholder="User name"
                     value=""
-                    required
                     />
                 </div>
                 <div class="sign_up_frame">
                     <label>Telefon raqam:</label>
                     <input type="text" name="mb_phone"
+                    class="mb_phone"
                     placeholder="User Phone number"
                     value=""
-                    required
                     />
                 </div>
             </div>
@@ -36,31 +36,32 @@
                 <div class="sign_up_frame">
                     <label>Password:</label>
                     <input type="password" name="mb_password"
+                    class="mb_password"
                     placeholder="User password"
                     value=""
-                    required
                     />
                 </div>
                 <div class="sign_up_frame">
                     <label>Passwordni tasdiqlash:</label>
                     <input type="password" name="mb_confirm_password"
+                    class="mb_confirm_password"
                     placeholder="confirm_password"
                     value=""
-                    required
                     />
                 </div>
             </div>
 
             <div class="login_input_frame"></div>
             <div class="media_frame">
-                <img class="upload_img_frame" src="/images/default_image.jpg" alt="">
+                <img class="upload_img_frame" src="/images/default-img...png" alt="">
                 <div class="upload_container">
                     <span class="media_text">Taom rasmi:</span>
                     <div class="filebox bs3-primary preview-image">
                         <input  class="upload-name" value="rasmni tanlang" disabled="disabled"/>
 
-                        <label>Rasmni yuklash</label>
-                          <input class="upload-hidden form-control-file restaurant_img" id="input_file" type="file"/>
+                        <label for="input_file">Rasmni yuklash</label>
+                          <input class="upload-hidden form-control-file restaurant_img"
+                          name="restaurant_img" id="input_file" type="file"/>
                     </div>
                     <p class="thumbnail_desc">Oshxona rasmingizni bu yerga yuklang. <br> Muhim ko'rsatmalar: .jpg, .jpeg, yoki .png <br>rasmda matn yo'q bo'lishi kerak !</p>
                 </div>
@@ -71,5 +72,62 @@
             </div>
         </form>
     </body>
+
+    <script>
+        $(function () {
+            let fileTarget = $(".filebox .upload-hidden")
+            let filename = ''
+
+            fileTarget.on('change', function() {
+                if(window.FileReader) {
+                    const uploading_file = $(this)[0].files[0]
+                    const fileType = uploading_file['type']
+                    const validImageTypes = ['image/jpg','image/jpeg','image/png']
+                    if(!validImageTypes.includes(fileType)) {
+                        alert("Iltimos ruhsat formatdagi rasmlarni yuklang: jpg, jpeg, png")
+                    } else {
+                        if(uploading_file) {
+                            console.log(URL.createObjectURL(uploading_file));
+                            $(".upload_img_frame")
+                             .attr('src', URL.createObjectURL(uploading_file))
+                             .addClass('success')
+                        }
+                        filename = uploading_file
+                    } 
+                }
+                $(this).siblings('.upload-name').val(filename)
+            })
+        })
+
+
+        function validateSignUpForm() {
+            const mb_nick =$(".mb_nick").val()
+            const mb_phone =$(".mb_phone").val()
+            const mb_password =$(".mb_password").val()
+            const mb_confirm_password =$(".mb_confirm_password").val()
+            const restaurant_img = $(".restaurant_img").get(0).files[0] ?? null
+
+            if(
+                mb_nick == "" ||
+                mb_phone == "" ||
+                mb_password == "" ||
+                mb_confirm_password == ""
+            ) {
+                alert("Iltimos barcha ma'lumotlarni kiriting!")
+                return false;
+
+            }else if (mb_password !== mb_confirm_password) {
+                alert("Tasdiqlovchi password mos emas!");
+                return false;
+            } 
+            
+            if (!restaurant_img) {
+                alert('Iltimos rasmni yuklang!')
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 
     <%- include('includes/footer') %>
