@@ -37,7 +37,10 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
         res.render("restaurant-menu", {restaurant_data: data})
     }catch(err){
         console.log(`ERROR: contr/getMyRestaurantProducts ${err.message}`);
-        res.json({state:"failed", message:err.message});
+        // if(!req.session.member) {
+        //     res.redirect("/resto/login")
+        // }
+        res.redirect("/resto")
     }
 }
 
