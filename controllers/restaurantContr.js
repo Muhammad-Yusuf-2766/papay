@@ -118,8 +118,16 @@ restaurantController.validateAuthRestaurant = (req, res, next) =>{
 
 
 restaurantController.logout = (req, res) =>{
-    console.log("GET controller.logout")
-    res.send("You are in logout")
+    try{
+      console.log("GET controller.logout")
+      req.session.destroy(function() {
+        res.redirect("/resto")
+      })
+    } catch (err) {
+        console.log("ERROR: CONTR/Log-out", err.message)
+        res.json({state: "fail", message: err.message})
+    }
+    
 };
 
 restaurantController.checkSessions = (req, res) =>{
