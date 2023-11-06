@@ -24,15 +24,15 @@ productController.addNewProduct = async (req, res) => {
         let data = req.body;
 
         data.product_images = req.files.map(ele =>{
-            return ele.path
+            return ele.path.replace(/\\/g, "/");
         });
         console.log(data);
 
         const result = await product.addNewProductData(data, req.member);
 
         const html = `<script>
-                        alert(new dish added successfully);
-                         window.location.replace(/resto/products/menu)
+                        alert('new dish added successfully');
+                         window.location.replace('/resto/products/menu')
                      </script>`;
         res.end(html);
 

@@ -17,16 +17,6 @@ restaurantController.home = (req, res) => {
 }
 
 
-restaurantController.home = (req, res) => {
-    try{
-        console.log("GET: CONTR/HOME");
-        res.render("home-page");
-    } catch (err) {
-        throw console.log(`ERROR: contr/home ${err.message}`);
-        res.json({state:"failed", message:err.message});
-    }
-}
-
 restaurantController.getMyRestaurantProducts = async (req, res) => {
     try{
         console.log("GET: contr/getMyRestaurantProducts");

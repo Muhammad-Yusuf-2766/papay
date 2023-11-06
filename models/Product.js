@@ -16,7 +16,7 @@ class Product {
             });
 
             assert.ok(result, Definer.general_err1);
-            console.log("Result::", result); // console da natijani tekshirish. o'zim uchun
+            // console.log("Result::", result); // console da natijani tekshirish. o'zim uchun
             return result;
         }catch(err){
             throw err
