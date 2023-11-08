@@ -1,9 +1,11 @@
 const assert = require("assert");
 const Member = require("../models/Member");
-const Product = require("../models/Product");   
+const Product = require("../models/Product");
+   
 
 const { signup } = require("./memberContr");
 const Definer = require("../lib/mistake");
+const Restaurant = require("../models/Restaurant");
 let restaurantController = module.exports;
 
 restaurantController.home = (req, res) => {
@@ -148,11 +150,15 @@ restaurantController.validateAdmin = (req, res, next) => {
 
 
 
-restaurantController.getAllRestaurants = (req, res) => {
+restaurantController.getAllRestaurants = async (req, res) => {
     try{
         console.log("GET: CONTR/getAllRestaurants")
 
-        res.render('all-restaurants')
+        const restaurant = new Restaurant ();
+      const restaurants_data = await restaurant.getAllRestaurantsData()
+      console.log("restos_data:", restaurants_data)
+
+        res.render('all-restaurants', {restaurants_data: restaurants_data})
 
     } catch (err) {
         console.log("ERROR: CONTR/getAllRestaurants", err.message)
