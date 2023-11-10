@@ -47,10 +47,10 @@
                                    </label>
                                 </td>
                                 <td style="width: 13%;">
-                                    <select class="spec_select mb_status">
+                                    <select class="spec_select mb_status" id="<%= value._id %>" >
                                         <option value="ONPAUSE" <% value.mb_status === 'ONPAUSE' ? 'selected' : '' %> >ON PAUSE</option>
                                         <option value="ACTIVE" value="ONPAUSE" <% value.mb_status === 'ACTIVE' ? 'selected' : '' %> >ACTIVE</option>
-                                        <option value="DELETED" value="ONPAUSE" <% value.mb_status === 'DELETED' ? 'selected' : '' %>>DELETED</option>
+                                        <option value="DELETED" <% value.mb_status === 'DELETED' ? 'selected' : '' %> >DELETED</option>
                                     </select>
                                 </td>
                             </tbody>
@@ -75,7 +75,6 @@
                 const id = e.target.id;
                 const mb_top = e.target.checked ? 'Y': 'N'
                 
-
                 axios.post('/resto/all-restaurant/edit', {id: id, mb_top: mb_top})
                 .then(response => {
                     const result = response.data;
@@ -84,8 +83,27 @@
                     else alert(result.messege)
                 })
                 .catch(err => console.log(err))
-
             })
+
+
+            // manupulate restaurants status features
+
+
+             $(".mb_status").on('change', function(e) {
+                const id = e.target.id;
+                const mb_status = $(`#${id}.mb_status`).val();
+                
+                axios.post('/resto/all-restaurant/edit', {id: id, mb_status: mb_status})
+                .then(response => {
+                    const result = response.data;
+                    console.log(result)
+                    console.log("member_status", mb_status)
+                    if(result.state === 'success') alert("Updated successfully")
+                    else alert(result.messege)
+                })
+                .catch(err => console.log(err))
+            })
+
         })
     </script>
 
