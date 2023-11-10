@@ -5,7 +5,7 @@ const Product = require("../models/Product");
 
 const { signup } = require("./memberContr");
 const Definer = require("../lib/mistake");
-const Restaurant = require("../models/Restaurant");
+const Resturant = require("../models/Restaurant");
 let restaurantController = module.exports;
 
 restaurantController.home = (req, res) => {
@@ -154,11 +154,27 @@ restaurantController.getAllRestaurants = async (req, res) => {
     try{
         console.log("GET: CONTR/getAllRestaurants")
 
-        const restaurant = new Restaurant ();
+      const restaurant = new Resturant();
       const restaurants_data = await restaurant.getAllRestaurantsData()
       console.log("restos_data:", restaurants_data)
 
         res.render('all-restaurants', {restaurants_data: restaurants_data})
+
+    } catch (err) {
+        console.log("ERROR: CONTR/getAllRestaurants", err.message)
+        res.json({state: "fail", message: err.message})
+    }
+}
+
+
+
+restaurantController.updateRestaurantByAdmin = async (req, res) => {
+    try{
+        console.log("GET: CONTR/getAllRestaurants")
+
+        const restaurant = new Resturant();
+        const result = await restaurant.updateRestaurantByAdmin(req.body)
+        await res.json({state:'success', data:result })
 
     } catch (err) {
         console.log("ERROR: CONTR/getAllRestaurants", err.message)

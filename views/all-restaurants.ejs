@@ -64,6 +64,31 @@
         
         
     </div>
+
+    
+    <script>
+
+        $(function() {
+            // manupulate restaurants top features
+
+            $(".mb_top").on('change', function(e) {
+                const id = e.target.id;
+                const mb_top = e.target.checked ? 'Y': 'N'
+                
+
+                axios.post('/resto/all-restaurant/edit', {id: id, mb_top: mb_top})
+                .then(response => {
+                    const result = response.data;
+                    console.log(result)
+                    if(result.state === 'success') alert("Updated successfully")
+                    else alert(result.messege)
+                })
+                .catch(err => console.log(err))
+
+            })
+        })
+    </script>
+
 </body>
 
 <%- include('includes/footer') %>
