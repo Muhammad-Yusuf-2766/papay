@@ -11,6 +11,7 @@ const store = new MongoDBStore({
     uri:process.env.MONGO_URL,
     collection:"sessions",
 });
+const cookieParser = require ('cookie-parser')
 
 // // MongoDB chaqirish:  mongoose orqali chaqirganim uchun bu usulni o'chirib qo'ydim.
 // const db = require("./server").db();
@@ -20,6 +21,7 @@ const store = new MongoDBStore({
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser())
 
 // 2: Session code
 app.use(
