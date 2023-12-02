@@ -1,9 +1,9 @@
 const assert = require("assert");
 const Member = require("../models/Member");
 let memberController = module.exports;
-
 const jwt = require('jsonwebtoken');
 const Definer = require("../lib/mistake");
+
 
 memberController.signup = async (req, res) =>{
     try{
@@ -15,7 +15,7 @@ memberController.signup = async (req, res) =>{
         // TODO AUTHENTICATE BASED ON JWT
         const token = memberController.createToken(new_member)
         console.log('token====', token);
-        res.cookie("access_token:", token, {
+        res.cookie("access_token", token, {
             maxAge: 6 * 3600 * 1000,
             httpOnly: true })
 
@@ -35,10 +35,10 @@ memberController.login = async (req, res) =>{
 
         // TODO AUTHENTICATE BASED ON JWT
         const token = memberController.createToken(result)
-        console.log('token====', token);
-        res.cookie("access_token:", token, {
+        res.cookie('access_token', token, {
             maxAge: 6 * 3600 * 1000,
-            httpOnly: true })
+            httpOnly: true 
+        })
         
         res.json({state:"succed", data:result})
     }catch (err) {
@@ -71,3 +71,19 @@ memberController.createToken = (result) => {
         throw err
     }
 }
+
+
+memberController.checkMyAuthentication = (req, res) => {
+    try {
+        console.log("GEt: contr/checkMyAuthentication")
+        const token = req.cookies["access_token"];
+        console.log('token:::', token);
+
+        const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+        assert.ok(member, Definer.general_err2)
+
+        res.json({state:"succed", data:member})
+    } catch (err) {
+        throw err
+    }
+} 
