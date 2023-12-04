@@ -48,7 +48,7 @@ memberController.login = async (req, res) =>{
 
 memberController.logout = (req, res) =>{
     console.log("GET controller.logout")
-    res.cookie('accsess_token', null, {maxAge: 0, httpOnly: true})
+    res.cookie('access_token', null, {maxAge: 0, httpOnly: true})
     console.log(`Succeed:  you loged out successfully!`)
     res.json(`Succeed: you loged out successfully!`)
 };
@@ -117,5 +117,6 @@ memberController.retrieveAuthMember = (req, res, next) => {
         next();
     } catch (error) {
         console.log(`ERROR: Contr/retrieveAuthMember`, error.message)
+        next();
     }
 }
