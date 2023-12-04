@@ -32,14 +32,12 @@ memberController.login = async (req, res) =>{
         const data = req.body;
         const member = new Member();
         const result = await member.loginData(data);
-
         // TODO AUTHENTICATE BASED ON JWT
         const token = memberController.createToken(result)
         res.cookie('access_token', token, {
             maxAge: 6 * 3600 * 1000,
             httpOnly: true 
         })
-        
         res.json({state:"succed", data:result})
     }catch (err) {
         console.log(`ERROR: contr/login`, err)
@@ -47,10 +45,15 @@ memberController.login = async (req, res) =>{
     }
 };
 
+
 memberController.logout = (req, res) =>{
     console.log("GET controller.logout")
-    res.send("You are in logout")
+    res.cookie('accsess_token', null, {maxAge: 0, httpOnly: true})
+    console.log(`Succeed:  you loged out successfully!`)
+    res.json(`Succeed: you loged out successfully!`)
 };
+
+
 
 memberController.createToken = (result) => {
     try{
@@ -87,3 +90,32 @@ memberController.checkMyAuthentication = (req, res) => {
         throw err
     }
 } 
+
+
+memberController.getChosenMember = async (req, res) => {
+    try {
+        console.log("GEt: contr/getChosenMember")
+        const id = req.params.id;
+
+        const member = new Member();
+        const result = await member.getChosenMemberData(req.member, id)
+        res.json({ state: "Succeed", data: result })
+        
+    } catch (error) {
+        console.log(`ERROR: Contr/getChosenMember`, error)
+        res.json({state:"failed", message:error.message})      
+    }
+}
+
+
+
+memberController.retrieveAuthMember = (req, res, next) => {
+    try {
+        const token = req.cookies['access_token']
+        req.member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+
+        next();
+    } catch (error) {
+        console.log(`ERROR: Contr/retrieveAuthMember`, error.message)
+    }
+}
