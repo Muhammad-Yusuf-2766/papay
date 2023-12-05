@@ -5,15 +5,6 @@ const { Script } = require("vm");
 
 let productController = module.exports;
 
-productController.getAllProducts = async (req, res) => {
-    try{
-        console.log("GET: Contr/getAllProducts");
-    } catch (err) {
-        console.log(`ERROR: Contr/getAllProducts, ${err.message}`);
-        res.json({state:"fail", message: err.message})
-    }
-}
-
 productController.addNewProduct = async (req, res) => {
     try{
         console.log("POST: Contr/addNewProduct");
@@ -51,5 +42,20 @@ productController.updateChosenProduct = async (req, res) => {
     } catch (err) {
         console.log(`ERROR: Contr/updateChosenProduct, ${err.message}`);
         res.json({state:"fail", message: err.message})
+    }
+}
+
+
+//  USers APIs  related to REACT pages //
+
+productController.getAllProducts =  async (req, res) => {
+    try {
+        console.log("POST: Contr/getAllProducts2");
+        const product = new Product
+        const result = await product.getgetAllProductsData(req.member, req.body )
+        res.json({state: 'Succeed', data: result})
+    } catch (error) {
+        console.log(`ERROR: Contr/getAllProducts2, ${error.message}`);
+        res.json({state:"fail", message: error.message})
     }
 }
