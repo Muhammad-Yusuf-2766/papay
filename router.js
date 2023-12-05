@@ -20,7 +20,12 @@ router.get(
 
 //  Product ga oid REST API lar
 router.post("/products",  
-memberController.retrieveAuthMember, 
-productController.getAllProducts )
+  memberController.retrieveAuthMember, 
+  productController.getAllProducts  
+)
+router.get('/products/:id', 
+  memberController.retrieveAuthMember,
+  productController.getChosenProduct
+)
 
 module.exports = router

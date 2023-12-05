@@ -71,6 +71,7 @@ class Member {
             const result = await this.memberModel
                .aggregate([
                    {$match: {_id: id, mb_status: "ACTIVE"}}, {$unset: "mb_password"}]) 
+                //    ToDo: Check auth member liked chosen member or not 
                .exec();
 
             assert.ok(result, Definer.general_err2)

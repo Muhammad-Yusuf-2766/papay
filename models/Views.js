@@ -1,11 +1,13 @@
-const memberModel = require("../schema/member.model");
+const MemberModel = require("../schema/member.model");
 const ViewModel = require("../schema/views.mode");
+const ProductModel = require("../schema/product.model");
 
 class View {
   constructor(mb_id) {
     this.viewModel = ViewModel;
     this.mb_id = mb_id;
-    this.memberModel = memberModel;
+    this.memberModel = MemberModel;
+    this.productModel = ProductModel;
   }
 
   async validateChosenTarget(view_ref_id, group_type) {
@@ -17,6 +19,14 @@ class View {
             .findOne({
               _id: view_ref_id,
               mb_status: "ACTIVE",
+            })
+            .exec();
+          break;
+        case "product":
+          result = await this.productModel
+            .findOne({
+              _id: view_ref_id,
+              product_status: "PROCESS",
             })
             .exec();
           break;
@@ -57,6 +67,16 @@ class View {
             )
             .exec();
           break;
+        case "product":
+          await this.productModel
+            .findOneAndUpdate(
+              {
+                _id: view_ref_id,
+              },
+              { $inc: { product_views: 1 } }
+            )
+            .exec();
+          break;
       }
       return true;
     } catch (error) {
@@ -66,10 +86,12 @@ class View {
 
   async checkViewExistence(view_ref_id) {
     try {
-      const view = await this.viewModel.findOne({
-        mb_id: this.mb_id,
-        view_ref_id: view_ref_id,
-      }).exec()
+      const view = await this.viewModel
+        .findOne({
+          mb_id: this.mb_id,
+          view_ref_id: view_ref_id,
+        })
+        .exec();
       return !!view;
     } catch (error) {
       throw error;

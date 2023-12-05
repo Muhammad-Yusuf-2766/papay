@@ -50,12 +50,26 @@ productController.updateChosenProduct = async (req, res) => {
 
 productController.getAllProducts =  async (req, res) => {
     try {
-        console.log("POST: Contr/getAllProducts2");
-        const product = new Product
+        console.log("POST: Contr/getAllProducts");
+        const product = new Product()
         const result = await product.getgetAllProductsData(req.member, req.body )
         res.json({state: 'Succeed', data: result})
     } catch (error) {
-        console.log(`ERROR: Contr/getAllProducts2, ${error.message}`);
+        console.log(`ERROR: Contr/getAllProducts, ${error.message}`);
+        res.json({state:"fail", message: error.message})
+    }
+}
+
+productController.getChosenProduct = async (req, res) => {
+    try {
+        console.log("GET: Contr/getChosenProduct");
+        const product = new Product()
+        const id = req.params.id
+        const result = await product.getChosenProductData(req.member, id )
+
+        res.json({state: 'Succeed', data: result})
+    } catch (error) {
+        console.log(`ERROR: Contr/getChosenProduct, ${error.message}`);
         res.json({state:"fail", message: error.message})
     }
 }
