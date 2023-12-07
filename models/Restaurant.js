@@ -2,6 +2,7 @@ const assert = require("assert");
 const Definer = require("../lib/mistake");
 const MemberModel = require("../schema/member.model");
 const { shapeIntoMongooseObjectId } = require("../lib/config");
+const Member = require("./Member");
 
 class Restaurant {
   constructor() {
@@ -49,6 +50,34 @@ class Restaurant {
       throw error;
     }
   }
+
+
+  async getChosenRestaurantData(member, id) {
+    try {
+        id = shapeIntoMongooseObjectId(id)
+        // condition: if not seen before by req user
+        if(member) {
+            const member_obj = new Member
+            await member_obj.viewChosenItemByMember(member, id, 'member')
+        }
+
+        const result = await this.memberModel.findOne({
+            _id: id,
+            mb_status: "ACTIVE"
+        }).exec()
+        assert.ok(result, Definer.general_err2)
+        return result
+
+        // increase target_view if member has not seen  before
+    } catch (error) {
+        throw error
+    }
+  }
+
+
+  /*********************************************************
+    *   Restaurant member and Admin APIs  related to BSSR    *
+    **********************************************************/
 
   async getAllRestaurantsData() {
     try {

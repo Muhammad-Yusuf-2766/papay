@@ -203,3 +203,19 @@ restaurantController.updateRestaurantByAdmin = async (req, res) => {
         res.json({state: "fail", message: error.message})
     }
    }
+
+
+   restaurantController.getChosenRestaurant = async (req, res) => {
+    try {
+        console.log("GET: CONTR/getChosenRestaurant")
+        const id = (req.params.id)
+        console.log("ID::::", id)
+        const restaurant = new Restaurant()
+        const result = await restaurant.getChosenRestaurantData(req.member, id)
+
+        res.json({state: 'Succeed', data: result })
+    } catch (error) {
+        console.log("ERROR: CONTR/getChosenRestaurant", error.message)
+        res.json({state: "fail", message: error.message})
+    }
+   }
