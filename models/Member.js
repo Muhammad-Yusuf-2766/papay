@@ -63,15 +63,15 @@ class Member {
             id = shapeIntoMongooseObjectId(id)
             console.log("request member:::", member);
 
-            if(member) {
-                // condition: if not seen before by req user
+        // condition: if not seen before by req user
+            if(member) {      
                 await this.viewChosenItemByMember(member, id, 'member')
             }
 
             const result = await this.memberModel
                .aggregate([
                    {$match: {_id: id, mb_status: "ACTIVE"}}, {$unset: "mb_password"}]) 
-                //    ToDo: Check auth member liked chosen member or not 
+                //    ToDo: Check auth member liked chosen target or not 
                .exec();
 
             assert.ok(result, Definer.general_err2)

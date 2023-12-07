@@ -5,8 +5,12 @@ const Product = require("../models/Product");
 
 const { signup } = require("./memberContr");
 const Definer = require("../lib/mistake");
-const Resturant = require("../models/Restaurant");
+const Restaurant = require("../models/Restaurant");
 let restaurantController = module.exports;
+
+    /*********************************************************
+    *   Restaurant member and Admin APIs  related to BSSR    *
+    **********************************************************/
 
 restaurantController.home = (req, res) => {
     try {
@@ -154,7 +158,7 @@ restaurantController.getAllRestaurants = async (req, res) => {
     try{
         console.log("GET: CONTR/getAllRestaurants")
 
-      const restaurant = new Resturant();
+      const restaurant = new Restaurant();
       const restaurants_data = await restaurant.getAllRestaurantsData()
       console.log("restos_data:", restaurants_data)
 
@@ -172,7 +176,7 @@ restaurantController.updateRestaurantByAdmin = async (req, res) => {
     try{
         console.log("GET: CONTR/updateRestaurantByAdmin")
 
-        const restaurant = new Resturant();
+        const restaurant = new Restaurant();
         const result = await restaurant.updateRestaurantByAdminData(req.body)
         await res.json({state:'success', data: result })
 
@@ -181,3 +185,21 @@ restaurantController.updateRestaurantByAdmin = async (req, res) => {
         res.json({state: "fail", message: err.message})
     }
 }
+
+
+    /*****************************************************
+    *        USers APIs  related to REACT pages          *
+    *****************************************************/ 
+   restaurantController.getRestaurants = async (req, res) => {
+    try {
+        console.log("GET: CONTR/getRestaurants")
+        const data = req.query;
+        console.log('query data:::>', data)
+        const restaurant = new Restaurant()
+        const result = await restaurant.getRestaurantsData(req.member, data)
+        res.json({state: 'Succeed', data: result })
+    } catch (error) {
+        console.log("ERROR: CONTR/getRestaurants", error.message)
+        res.json({state: "fail", message: error.message})
+    }
+   }

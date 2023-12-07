@@ -1,10 +1,13 @@
 const Product = require("../models/Product")
 const assert = require("assert");
 const Definer = require("../lib/mistake");
-const { Script } = require("vm");
+// const { Script } = require("vm");
 
 let productController = module.exports;
 
+    /*********************************************************
+    *   Restaurant member and Admin APIs  related to BSSR    *
+    **********************************************************/
 productController.addNewProduct = async (req, res) => {
     try{
         console.log("POST: Contr/addNewProduct");
@@ -45,8 +48,10 @@ productController.updateChosenProduct = async (req, res) => {
     }
 }
 
+    /*****************************************************
+    *        USers APIs  related to REACT pages          *
+    *****************************************************/ 
 
-//  USers APIs  related to REACT pages //
 
 productController.getAllProducts =  async (req, res) => {
     try {
