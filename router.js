@@ -44,6 +44,6 @@ router.get('/restaurants/:id',
 // Orders related Routers
 router.post("/orders/create", memberController.retrieveAuthMember, orderController.createOrder)
 router.get('/orders', memberController.retrieveAuthMember, orderController.getMyOrders)
-
+router.post('/orders/edit', memberController.retrieveAuthMember, orderController.editChosenOrder)
 
 module.exports = router
