@@ -4,6 +4,10 @@ const memberController = require("./controllers/memberContr")
 const productController = require('./controllers/products.Contr')
 const restaurantController = require('./controllers/restaurantContr')
 const orderController = require('./controllers/orderContr')
+const uploader_community = require('./utils/upload-multer')("community")
+const uploader_member = require('./utils/upload-multer')("members")
+const communityController = require('./controllers/communityContr');
+
 
 // ==========================================
 //                REST API       
@@ -45,5 +49,13 @@ router.get('/restaurants/:id',
 router.post("/orders/create", memberController.retrieveAuthMember, orderController.createOrder)
 router.get('/orders', memberController.retrieveAuthMember, orderController.getMyOrders)
 router.post('/orders/edit', memberController.retrieveAuthMember, orderController.editChosenOrder)
+
+
+// Community related Routers 
+router.post('/community/image',
+ uploader_community.single('community_image'), communityController.imageInsertion)
+router.post("/community/create",
+ memberController.retrieveAuthMember,
+ communityController.createArticle)
 
 module.exports = router
