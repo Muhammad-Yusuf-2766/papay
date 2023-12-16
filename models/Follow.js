@@ -58,6 +58,7 @@ class Follow {
           { $inc: { mb_follow_cnt: modifier } }
         )
         .exec()
+        return true
       } else if (type === "subscriber_change") {
         await this.memberModel.findByIdAndUpdate(
             { _id: mb_id },
@@ -67,6 +68,27 @@ class Follow {
       return true
     } catch (error) {
       throw error;
+    }
+  }
+
+
+  async unSubscribeData(member, data) {
+    try {
+      const subscriber_id = shapeIntoMongooseObjectId(member._id);
+      const follow_id = shapeIntoMongooseObjectId(data.mb_id);
+
+      const result = await this.followModel.findOneAndDelete({
+        follow_id: follow_id,
+        subscriber_id: subscriber_id
+      })
+      assert.ok(result, Definer.general_err1)
+
+      await this.modifyMemberFollowCounts(follow_id, 'subscriber_change', -1)
+      await this.modifyMemberFollowCounts(subscriber_id, 'follow_change', -1)
+
+      return true
+    } catch (error) {
+      throw error
     }
   }
 }
