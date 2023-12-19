@@ -2,7 +2,7 @@ const MemberModel = require("../schema/member.model")
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require('bcryptjs');
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const { shapeIntoMongooseObjectId, lookup_auth_memebr_following } = require("../lib/config");
 const View = require("./Views");
 
 class Member {
@@ -60,18 +60,24 @@ class Member {
     }
     async getChosenMemberData(member, id) {
         try {
+            const auth_mb_id = shapeIntoMongooseObjectId(member._id)
             id = shapeIntoMongooseObjectId(id)
             console.log("request member:::", member);
+
+            let aggregateQuery = [
+                {$match: {_id: id, mb_status: "ACTIVE"}}, {$unset: "mb_password"}
+            ]
 
         // condition: if not seen before by req user
             if(member) {      
                 await this.viewChosenItemByMember(member, id, 'member')
+                //    ToDo: Check auth member liked chosen target or not 
+                aggregateQuery.push(lookup_auth_memebr_following(auth_mb_id, 'members'))
             }
 
             const result = await this.memberModel
-               .aggregate([
-                   {$match: {_id: id, mb_status: "ACTIVE"}}, {$unset: "mb_password"}]) 
-                //    ToDo: Check auth member liked chosen target or not 
+               .aggregate(aggregateQuery) 
+                // to check  follow back qilganmizmi .. 
                .exec();
 
             assert.ok(result, Definer.general_err2)
