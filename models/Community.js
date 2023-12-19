@@ -30,7 +30,7 @@ class Community {
       return await article.save();
     } catch (error) {
       console.log(error);
-      throw error;
+      throw new Error(Definer.mongo_validation_err1);
     }
   }
 

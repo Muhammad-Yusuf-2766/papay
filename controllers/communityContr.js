@@ -22,7 +22,7 @@ communityController.createArticle = async (req, res) => {
     console.log("POST: community_Contr/createArticle");
     const community = new Community();
     const result = await community.createArticleData(req.member, req.body);
-    assert.ok(result, Definer.general_err1);
+    assert.ok(result, Definer.mongo_validation_err1);
 
     res.json({ state: "Success", data: result });
   } catch (error) {
