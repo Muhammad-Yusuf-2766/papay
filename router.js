@@ -97,9 +97,18 @@ router.post(
   memberController.retrieveAuthMember,
   followController.subscribe
 );
-router.post("/follow/unsubscribe", memberController.retrieveAuthMember, followController.unSubscribe)
+router.post(
+  "/follow/unsubscribe",
+  memberController.retrieveAuthMember,
+  followController.unSubscribe
+);
 
-router.get("/follow/followings", followController.getMemberFollowings)
+router.get("/follow/followings", followController.getMemberFollowings);
 
+router.get(
+  "/follow/followers",
+  memberController.retrieveAuthMember,
+  followController.getMemberFollowers
+);
 
 module.exports = router;
