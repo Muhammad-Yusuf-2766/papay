@@ -4,10 +4,12 @@ const assert = require("assert");
 const bcrypt = require("bcryptjs");
 const {
   shapeIntoMongooseObjectId,
-  lookup_auth_memebr_following,
+  lookup_auth_member_following,
+  lookup_auth_member_liked
 } = require("../lib/config");
 const View = require("./Views");
 const Like = require("./Like");
+const {lookup} = require('dns')
 
 class Member {
   constructor() {
@@ -72,6 +74,7 @@ class Member {
       if (member) {
         await this.viewChosenItemByMember(member, id, "member");
         //    ToDo: Check auth member liked chosen target or not
+        aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
         aggregateQuery.push(
           lookup_auth_memebr_following(auth_mb_id, "members")
         );
@@ -79,8 +82,9 @@ class Member {
 
       const result = await this.memberModel
         .aggregate(aggregateQuery)
-        // to check  follow back qilganmizmi ..
+        // to check  follow back qilganmizmi .. 
         .exec();
+        console.log("result:::", result);
 
       assert.ok(result, Definer.general_err2);
       return result[0];
@@ -124,7 +128,7 @@ class Member {
       const like = new Like(mb_id);
       const isValid = await like.validateTargetItem(like_ref_id, group_type);
       console.log("isValid::::", isValid);
-      assert.ok(isValid, Definer.generel_err2);
+      assert.ok(isValid, Definer.general_err2);
 
       //doesExist
       const doesExist = await like.checkLikeExistence(like_ref_id);

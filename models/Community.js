@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const {
   shapeIntoMongooseObjectId,
   board_id_enum_list,
+  lookup_auth_member_liked
 } = require("../lib/config");
 const View = require("./Views");
 const Member = require("./Member");
@@ -93,6 +94,7 @@ class Community {
             },
           },
           { $unwind: "$member_data" },
+          lookup_auth_member_liked(auth_mb_id),
           // todo: check auth member liked the chosen target
         ])
         .exec();
