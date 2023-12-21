@@ -43,7 +43,7 @@ const productSchema = new mongoose.Schema({
         enum:{values:product_size_enums, message:"{Value} is not among enum values"}
     },
     product_volume: {
-        type: String,
+        type: Number,
         default: 1,
         required: function() {
             return(this.product_collection === 'drink')
